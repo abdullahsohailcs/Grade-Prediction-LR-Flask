@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>STUDENT GRADE PREDICTION</title>
+    <style>
+        body {
+            background-color: #add8e6;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 50px;
+        }
+
+        form {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border-radius: 20px;
+            border: 2px solid black;
+            font-size: 24px;
+		width: 350px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h3, h4 {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+function validateForm() {
+    // Get the form inputs
+    var m1Obtained = parseInt(document.getElementsByName("m1")[0].value);
+    var m1Total = parseInt(document.getElementsByName("m1t")[0].value);
+    var m2Obtained = parseInt(document.getElementsByName("m2")[0].value);
+    var m2Total = parseInt(document.getElementsByName("m2t")[0].value);
+    var attendance = parseInt(document.getElementById("attInput").value);
+
+    console.log("Mid 1 Obtained ", m1Obtained)
+    console.log("Mid 1 Total ", m1Total)
+    console.log("Mid 2 Obtained ", m2Obtained)
+    console.log("Mid 2 Total ", m2Total)
+    console.log("Attendance ", attendance)
+
+    // Check if obtained marks are less than total marks for mid1 and mid2
+    if (m1Obtained > m1Total || m2Obtained > m2Total) {
+        alert("Obtained marks cannot be greater than total marks for mid1 and mid2.");
+        return false;
+    }
+
+    // Check if attendance percentage is within the valid range of 0-100
+    if (attendance < 0 || attendance > 100) {
+        alert("Attendance percentage must be between 0 and 100.");
+        return false;
+    }
+
+    // If all validations pass, return true to submit the form
+    return true;
+}
+
+    </script>
+</head>
+<body>
+    <h1>STUDENT GRADE PREDICTION</h1>
+
+    <form method="POST" action="{{url_for('home')}}" onsubmit="return validateForm()">
+        <b>Enter obtained marks in Mid1:</b><br>
+        <input type="number" name="m1" placeholder="Mid 1 Obtained Marks" required min="0"><br><br>
+
+        <b>Enter total marks of Mid1:</b><br>
+        <input type="number" name="m1t" placeholder="Mid 1 Total Marks" required min="0"><br><br>
+
+        <b>Enter obtained marks in Mid2:</b><br>
+        <input type="number" name="m2" placeholder="Mid 2 Obtained Marks" required min="0"><br><br>
+
+        <b>Enter total marks of Mid2:</b><br>
+        <input type="number" name="m2t" placeholder="Mid 2 Total Marks" required min="0"><br><br>
+
+        <b>Enter total marks of Final:</b><br>
+        <input type="number" name="ft" placeholder="Final Total Marks" required min="0"><br><br>
+
+        <b>Attendance Percentage:</b><br>
+	  <input type="number" name="att" id="attInput" placeholder="Attendance Percentage (0-100)" required><br><br>
+
+<h3>Predicted Final: {{ prediction }}</h3>
+        <h4>Predicted Grade: {{ grade }}</h4>
+
+        <input type="submit" value="Predict!">
+    </form>
+
+</body>
+</html>
